@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import React from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { blocksState, modalState } from "../atoms";
 
 const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];
 function Calendar({ weeks }) {
-  const [blocks, setBlocks] = useRecoilState(blocksState);
-  const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const blocks = useRecoilValue(blocksState);
+  const setModalOpen = useSetRecoilState(modalState);
 
   const onDatePress = (id) => {
     setModalOpen({ state: true, id });

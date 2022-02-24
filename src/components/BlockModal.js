@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { blocksState, modalState } from "../atoms";
 const DAYS_OF_WEEK = ["일", "월", "화", "수", "목", "금", "토"];

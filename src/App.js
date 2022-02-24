@@ -35,7 +35,7 @@ export default function App() {
     for (let week = 0; week < 6; week++) {
       let newWeek = [];
       for (let day = 0; day < 7; day++) {
-        if (date > lastDate || (week == 0 && firstDay > day)) {
+        if (date > lastDate || (week === 0 && firstDay > day)) {
           newWeek.push({ id: null, value: "" });
         } else {
           const id =
