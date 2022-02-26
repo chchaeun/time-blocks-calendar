@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -52,47 +53,56 @@ const BlockModal = () => {
     setBlocks(newBlocks);
   };
   return (
-    <Modal>
-      <Overlay
-        onClick={() => setModalOpen({ state: false, id: null })}
-      ></Overlay>
-      <ModalView>
-        <div>
-          {dateFormat && (
-            <ModalHeader>
-              {dateFormat.getMonth() + 1}월 {dateFormat.getDate()}일{" "}
-              {DAYS_OF_WEEK[dateFormat.getDay()]}
-            </ModalHeader>
-          )}
-
-          {modalOpen.id &&
-            blocks[modalOpen.id] &&
-            blocks[modalOpen.id].map((data, idx) => (
-              <ModalBlock key={idx}>
-                <span
-                  style={{ cursor: "pointer" }}
-                  onClick={() => deleteSchedule(data.id)}
+    <AnimatePresence>
+      <Modal
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <Overlay
+          onClick={() => setModalOpen({ state: false, id: null })}
+        ></Overlay>
+        <ModalView>
+          <div>
+            {dateFormat && (
+              <ModalHeader>
+                {dateFormat.getMonth() + 1}월 {dateFormat.getDate()}일{" "}
+                {DAYS_OF_WEEK[dateFormat.getDay()]}
+              </ModalHeader>
+            )}
+            {modalOpen.id &&
+              blocks[modalOpen.id] &&
+              blocks[modalOpen.id].map((data, idx) => (
+                <ModalBlock
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  key={idx}
                 >
-                  ✅
-                </span>
-                <span style={{ marginLeft: "5px" }}>{data.content}</span>
-              </ModalBlock>
-            ))}
-        </div>
-        <form onSubmit={addSchedule}>
-          <BlockInput
-            onChange={onChangeText}
-            value={value}
-            placeholder="일정을 입력하세요."
-          />
-        </form>
-      </ModalView>
-    </Modal>
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={() => deleteSchedule(data.id)}
+                  >
+                    ✅
+                  </span>
+                  <span style={{ marginLeft: "5px" }}>{data.content}</span>
+                </ModalBlock>
+              ))}
+          </div>
+          <form onSubmit={addSchedule}>
+            <BlockInput
+              onChange={onChangeText}
+              value={value}
+              placeholder="일정을 입력하세요."
+            />
+          </form>
+        </ModalView>
+      </Modal>
+    </AnimatePresence>
   );
 };
 
 export default BlockModal;
-const Modal = styled.div`
+const Modal = styled(motion.div)`
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -123,7 +133,7 @@ const Overlay = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
 `;
-const ModalBlock = styled.div`
+const ModalBlock = styled(motion.div)`
   flex-direction: row;
   align-items: center;
   background-color: whitesmoke;

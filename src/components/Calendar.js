@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -9,6 +10,7 @@ function Calendar({ weeks }) {
   const setModalOpen = useSetRecoilState(modalState);
 
   const onDatePress = (id) => {
+    if (!id) return;
     setModalOpen({ state: true, id });
   };
   return (
@@ -41,10 +43,12 @@ function Calendar({ weeks }) {
                   >
                     {date.value}
                   </span>
-                  {blocks[date.id] &&
-                    blocks[date.id].map((data) => (
-                      <Block key={data.id}>{data.content}</Block>
-                    ))}
+                  <ScrollBox>
+                    {blocks[date.id] &&
+                      blocks[date.id].map((data) => (
+                        <Block key={data.id}>{data.content}</Block>
+                      ))}
+                  </ScrollBox>
                 </DateBox>
               ))}
           </Week>
@@ -68,9 +72,7 @@ const Week = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 `;
-const DateBox = styled.div`
-  display: flex;
-  flex-direction: column;
+const DateBox = styled(motion.div)`
   width: 10vw;
   height: ${(props) => (props.height ? props.height : "13vh")};
   align-items: center;
@@ -88,5 +90,13 @@ export const Block = styled.div`
   height: 3vh;
   justify-content: center;
   display: flex;
-  font-size: 13px;
+  font-size: 0.8rem;
+`;
+const ScrollBox = styled.div`
+  -ms-overflow-style: none;
+  height: 10vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
