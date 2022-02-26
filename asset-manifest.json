@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/time-blocks-calendar/static/css/main.e6c13ad2.css",
-    "main.js": "/time-blocks-calendar/static/js/main.97904aea.js",
+    "main.js": "/time-blocks-calendar/static/js/main.c781bc8e.js",
     "static/js/787.e4bc674b.chunk.js": "/time-blocks-calendar/static/js/787.e4bc674b.chunk.js",
     "index.html": "/time-blocks-calendar/index.html",
     "main.e6c13ad2.css.map": "/time-blocks-calendar/static/css/main.e6c13ad2.css.map",
-    "main.97904aea.js.map": "/time-blocks-calendar/static/js/main.97904aea.js.map",
+    "main.c781bc8e.js.map": "/time-blocks-calendar/static/js/main.c781bc8e.js.map",
     "787.e4bc674b.chunk.js.map": "/time-blocks-calendar/static/js/787.e4bc674b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.97904aea.js"
+    "static/js/main.c781bc8e.js"
   ]
 }
