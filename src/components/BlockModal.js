@@ -8,6 +8,7 @@ const BlockModal = () => {
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [blocks, setBlocks] = useRecoilState(blocksState);
   const [value, setValue] = useState("");
+  const [category, setCategory] = useState("");
   const date = modalOpen.id && [
     modalOpen.id.slice(0, 4),
     modalOpen.id.slice(4, 6),
@@ -21,6 +22,12 @@ const BlockModal = () => {
     } = e;
     setValue(value);
   };
+  const onChangeCategory = (e) => {
+    const {
+      target: { value },
+    } = e;
+    setCategory(value);
+  };
   const addSchedule = (e) => {
     e.preventDefault();
     let newBlocks;
@@ -28,28 +35,46 @@ const BlockModal = () => {
       newBlocks = { ...blocks };
       if (newBlocks[modalOpen.id]) {
         newBlocks[modalOpen.id] = newBlocks[modalOpen.id].concat([
-          { id: Date.now(), content: value },
+          { id: Date.now(), content: value, done: false, category },
         ]);
         console.log(newBlocks[modalOpen.id]);
       } else {
         newBlocks = {
           ...blocks,
-          [modalOpen.id]: [{ id: Date.now(), content: value }],
+          [modalOpen.id]: [
+            { id: Date.now(), content: value, done: false, category },
+          ],
         };
       }
     } else {
       newBlocks = {
-        [modalOpen.id]: [{ id: Date.now(), content: value }],
+        [modalOpen.id]: [
+          { id: Date.now(), content: value, done: false, category },
+        ],
       };
     }
     setBlocks(newBlocks);
     setValue("");
+    setCategory("");
   };
   const deleteSchedule = (id) => {
     const newBlocks = { ...blocks };
     newBlocks[modalOpen.id] = newBlocks[modalOpen.id].filter(
       (value) => value.id !== id
     );
+    setBlocks(newBlocks);
+  };
+  const doneSchecule = (id) => {
+    const newBlocks = { ...blocks };
+    newBlocks[modalOpen.id] = newBlocks[modalOpen.id].map((value) => {
+      if (value.id === id) {
+        const newObj = { ...value, done: !value.done };
+        return {
+          ...newBlocks[modalOpen.id],
+          ...newObj,
+        };
+      }
+    });
     setBlocks(newBlocks);
   };
   return (
@@ -79,23 +104,40 @@ const BlockModal = () => {
                   exit={{ opacity: 0 }}
                   key={idx}
                 >
+                  <span>
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => doneSchecule(data.id)}
+                    >
+                      {data.done ? "✅" : "⬜"}
+                    </span>
+                    <span style={{ marginLeft: "5px" }}>[{data.category}]</span>
+                    <span style={{ marginLeft: "5px" }}>{data.content}</span>
+                  </span>
                   <span
                     style={{ cursor: "pointer" }}
                     onClick={() => deleteSchedule(data.id)}
                   >
-                    ✅
+                    ❌
                   </span>
-                  <span style={{ marginLeft: "5px" }}>{data.content}</span>
                 </ModalBlock>
               ))}
           </div>
-          <form onSubmit={addSchedule}>
+          <BlockForm onSubmit={addSchedule}>
             <BlockInput
+              width={20}
+              onChange={onChangeCategory}
+              value={category}
+              placeholder="카테고리"
+            />
+            <BlockInput
+              width={80}
               onChange={onChangeText}
               value={value}
-              placeholder="일정을 입력하세요."
+              placeholder="일정"
             />
-          </form>
+            <button style={{ display: "none" }} type="submit"></button>
+          </BlockForm>
         </ModalView>
       </Modal>
     </AnimatePresence>
@@ -136,16 +178,22 @@ const Overlay = styled.div`
 `;
 const ModalBlock = styled(motion.div)`
   flex-direction: row;
-  align-items: center;
+  display: flex;
+  justify-content: space-between;
   background-color: whitesmoke;
   margin-block: 5px;
+`;
+const BlockForm = styled.form`
+  display: flex;
+  flex-direction: row;
 `;
 const BlockInput = styled.input`
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 3px;
-  width: 98%;
+  width: ${(p) => `${p.width}%`};
   border: none;
   padding: 5px;
+  margin-inline: 5px;
   &:focus {
     outline: none;
   }

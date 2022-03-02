@@ -4,6 +4,7 @@ import Calendar from "./components/Calendar";
 import BlockModal from "./components/BlockModal";
 import { useRecoilValue } from "recoil";
 import { modalState } from "./atoms";
+import { AnimatePresence } from "framer-motion";
 export default function App() {
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
