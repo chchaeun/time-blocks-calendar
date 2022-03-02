@@ -80,7 +80,7 @@ const DateBox = styled(motion.div)`
   padding: 2px;
 `;
 export const Block = styled.div`
-  background-color: #9ea3ff;
+  background-color: #cce0ff;
   border-radius: 5px;
   overflow: hidden;
   margin-top: 2px;
