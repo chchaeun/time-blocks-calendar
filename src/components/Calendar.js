@@ -46,7 +46,9 @@ function Calendar({ weeks }) {
                   <ScrollBox>
                     {blocks[date.id] &&
                       blocks[date.id].map((data) => (
-                        <Block key={data.id}>{data.content}</Block>
+                        <Block done={data.done} key={data.id}>
+                          {data.content}
+                        </Block>
                       ))}
                   </ScrollBox>
                 </DateBox>
@@ -80,7 +82,7 @@ const DateBox = styled(motion.div)`
   padding: 2px;
 `;
 export const Block = styled.div`
-  background-color: #cce0ff;
+  background-color: ${(p) => (p.done ? "#cce0ff" : "#ffcd82")};
   border-radius: 5px;
   overflow: hidden;
   margin-top: 2px;
