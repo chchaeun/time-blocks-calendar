@@ -82,7 +82,7 @@ const DateBox = styled(motion.div)`
   padding: 2px;
 `;
 export const Block = styled.div`
-  background-color: ${(p) => (p.done ? "#cce0ff" : "#ffcd82")};
+  background-color: ${(p) => (p.done ? "#bad5ff" : "#ffcd82")};
   border-radius: 5px;
   overflow: hidden;
   margin-top: 2px;
