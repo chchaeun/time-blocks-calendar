@@ -89,7 +89,7 @@ export const Block = styled.div`
   padding: 1px;
   padding-bottom: 2px;
   width: 8vw;
-  height: 3vh;
+  height: 1rem;
   justify-content: center;
   display: flex;
   font-size: 0.8rem;
